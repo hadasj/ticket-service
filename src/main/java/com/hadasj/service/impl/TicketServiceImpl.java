@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -19,15 +20,20 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Ticket generate() {
-        Ticket lastTicket = ticketDao.getLast();
+        Optional<Ticket> lastTicket = ticketDao.getLast();
+        final Long lastOrder = lastTicket.map(Ticket::getOrder).orElse(0L);
 
         Ticket ticket = new Ticket();
         ticket.setId(++counter);
         ticket.setCreateTime(LocalDateTime.now());
-        ticket.setOrder(lastTicket.getOrder() + 1);
+        ticket.setOrder(lastOrder + 1);
         return ticket;
 
         // TODO: persist !!!
     }
 
+    @Override
+    public Optional<Ticket> getActual() {
+        return Optional.empty();
+    }
 }

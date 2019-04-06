@@ -1,8 +1,6 @@
 package com.hadasj.dao;
 
-import com.hadasj.entity.Ticket;
-
-import java.util.List;
+import java.util.Optional;
 
 public interface Dao<T> {
     /**
@@ -11,14 +9,14 @@ public interface Dao<T> {
     void insert(T record);
 
     /**
-     * @return all entities
+     * @return last entity
      */
-    List<T> list();
+    Optional<T> getLast();
 
     /**
-     * @return get entity by id
+     * @return first entity
      */
-    T get(long id);
+    Optional<T> getFirst();
 
     /**
      * delete entity by id
