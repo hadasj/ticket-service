@@ -22,4 +22,9 @@ public interface Dao<T> {
      * delete entity by id
      */
     void delete(long id);
+
+    /**
+     * @return next id from sequence
+     */
+    long next();
 }

@@ -1,10 +1,15 @@
 package com.hadasj.dto;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.ZonedDateTime;
 
 public class TicketDto {
+    private static final String DATE_TIME_FORMAT = "dd-MM-yyyy hh:mm:ss";
+
     private long id;
-    private LocalDateTime createTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT)
+    private ZonedDateTime createTime;
     private long order;
 
     public long getId() {
@@ -15,11 +20,11 @@ public class TicketDto {
         this.id = id;
     }
 
-    public LocalDateTime getCreateTime() {
+    public ZonedDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(ZonedDateTime createTime) {
         this.createTime = createTime;
     }
 

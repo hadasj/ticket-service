@@ -6,28 +6,24 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
 @Component
 public class TicketDaoImpl implements TicketDao {
 
-// TODO: sorted tree map -> get actual order!!
+    private AtomicLong sequence;
     private SortedMap<Long, Ticket> store;
 
     @PostConstruct
     public void init() {
+        sequence = new AtomicLong();
         store = new TreeMap<>();
     }
 
     @Override
     public void insert(Ticket record) {
-        throw new IllegalStateException("unimplemented");
-    }
-
-    private Optional<Ticket> get(Supplier<Long> idSupplier) {
-        if (store.isEmpty())
-            return Optional.empty();
-        return Optional.of(store.get(idSupplier.get()));
+        store.put(record.getId(), record);
     }
 
     @Override
@@ -42,6 +38,17 @@ public class TicketDaoImpl implements TicketDao {
 
     @Override
     public void delete(long id) {
-        throw new IllegalStateException("unimplemented");
+        store.remove(id);
+    }
+
+    @Override
+    public long next() {
+        return sequence.incrementAndGet();
+    }
+
+    private Optional<Ticket> get(Supplier<Long> idSupplier) {
+        if (store.isEmpty())
+            return Optional.empty();
+        return Optional.of(store.get(idSupplier.get()));
     }
 }

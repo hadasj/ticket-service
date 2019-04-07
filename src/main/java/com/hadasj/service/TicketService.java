@@ -9,10 +9,15 @@ public interface TicketService {
     /**
      * @return new initialized persisted ticket
      */
-    Ticket generate();
+    Ticket create();
 
     /**
      * @return actual waiting ticket
      */
     Optional<Ticket> getActual();
+
+    /**
+     * delete last ticket
+     */
+    void deleteLast();
 }

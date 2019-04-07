@@ -1,8 +1,9 @@
 package com.hadasj.service;
 
 import com.hadasj.Application;
+import com.hadasj.dao.impl.TicketDaoImpl;
 import com.hadasj.entity.Ticket;
-import org.apache.commons.lang3.time.DateUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.Calendar;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -21,13 +20,22 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes = Application.class)
 public class TicketServiceTest {
 
+    // TODO: mock dao
     @Autowired
     private TicketService service;
+
+    @Autowired
+    private TicketDaoImpl ticketDao;
+
+    @Before
+    public void setUp() {
+        ticketDao.init();
+    }
 
     @Test
     public void generateTest() {
         generate(5);
-        Ticket result = service.generate();
+        Ticket result = service.create();
 
         assertNotNull(result);
         assertNotNull(result.getId());
@@ -54,11 +62,20 @@ public class TicketServiceTest {
 
     @Test
     public void deleteTest() {
-        // TODO
+        generate(1);
+
+        Optional<Ticket> actual = service.getActual();
+        assertNotNull(actual);
+        assertTrue(actual.isPresent());
+
+        service.deleteLast();
+        actual = service.getActual();
+        assertNotNull(actual);
+        assertFalse(actual.isPresent());
     }
 
     private void generate(final int count) {
         for (int i = 0; i < count; i++)
-            service.generate();
+            service.create();
     }
 }
