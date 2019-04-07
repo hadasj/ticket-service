@@ -33,7 +33,7 @@ public class TicketControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value("1"))
-                .andExpect(jsonPath("createTime").value(now.format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss"))))
+                .andExpect(jsonPath("createTime").value(now.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))))
                 .andExpect(jsonPath("order").value("1"));
 
         // get it again
@@ -41,7 +41,7 @@ public class TicketControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value("1"))
-                .andExpect(jsonPath("createTime").value(now.format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss"))))
+                .andExpect(jsonPath("createTime").value(now.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))))
                 .andExpect(jsonPath("order").value("1"));
 
         // delete it

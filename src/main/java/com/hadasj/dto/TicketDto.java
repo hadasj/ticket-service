@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.ZonedDateTime;
 
 public class TicketDto {
-    private static final String DATE_TIME_FORMAT = "dd-MM-yyyy hh:mm:ss";
+    private static final String DATE_TIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
     private long id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_FORMAT)
